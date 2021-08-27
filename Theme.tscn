@@ -1,0 +1,130 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/bg.png" type="Texture" id=2]
+[ext_resource path="res://text_box/text_box.tscn" type="PackedScene" id=3]
+[ext_resource path="res://buttons/menu_button/menu_button.tscn" type="PackedScene" id=4]
+[ext_resource path="res://card_holder/card_holder.tscn" type="PackedScene" id=5]
+[ext_resource path="res://buttons/backpack_button/backpack_button.tscn" type="PackedScene" id=6]
+[ext_resource path="res://areas/drop_area/drop_area.tscn" type="PackedScene" id=7]
+[ext_resource path="res://masks/actor_image_mask.png" type="Texture" id=9]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+# Manages the whole game loop of the theme
+
+# Onready variables
+
+onready var textBox = $TextBox
+onready var nameBar = $TextBox/NameBar
+onready var imageFrame = $ImageFrame
+onready var cardHolder = $CardHolder
+onready var dropArea = $DropArea
+
+# Functions
+
+
+
+# Velius Engine events
+
+func _ready():
+	Velius.connect(\"new_dialogue\", self, \"_on_new_dialogue\")
+	$BackpackButton.connect(\"pressed\", self, \"_on_BackpackButton_pressed\")
+	$MenuButton.connect(\"pressed\", self, \"_on_MenuButton_pressed\")
+
+func _on_new_dialogue(data : Dictionary):
+	textBox.setText(data.text)
+	nameBar.updateName(data.tellerName)
+	imageFrame.setTex(data.image)
+
+	# If there are any choices, show them
+	if data.has(\"choices\"):
+		# Short delay as an effect
+		yield(get_tree().create_timer(1.0), \"timeout\")
+		for choice in data.choices:
+			cardHolder.newCard(data.choices[choice].title, data.choices[choice].description, data.choices[choice].image, int(choice))
+	else:
+		pass #set_next(current_node.next) wait for input...
+	
+
+# Godot Engine Events
+
+func _on_MenuButton_pressed():
+	Velius.open_side_menu()
+
+func _on_BackpackButton_pressed():
+	print(\"open backpack\")
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends TextureRect
+
+
+func setTex(path):
+	texture = Velius.png_to_tex(path)
+"
+
+[node name="DialogueView" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="Sprite" parent="."]
+scale = Vector2( 1.28933, 1.28933 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="ImageFrame" type="TextureRect" parent="."]
+light_mask = 4096
+anchor_right = 1.0
+margin_left = 43.0
+margin_right = -36.9999
+margin_bottom = 1760.0
+mouse_filter = 2
+stretch_mode = 7
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light2D" type="Light2D" parent="ImageFrame"]
+position = Vector2( 686.225, 892.991 )
+texture = ExtResource( 9 )
+mode = 3
+range_item_cull_mask = 4096
+
+[node name="TextBox" parent="." instance=ExtResource( 3 )]
+anchor_right = 1.0
+margin_right = -63.0
+
+[node name="MenuButton" parent="." instance=ExtResource( 4 )]
+margin_left = 38.6863
+margin_top = 22.9783
+margin_right = 294.686
+margin_bottom = 277.978
+mouse_default_cursor_shape = 0
+
+[node name="BackpackButton" parent="." instance=ExtResource( 6 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -280.0
+margin_top = 17.5
+margin_right = -24.0
+margin_bottom = 272.5
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+
+[node name="CardHolder" parent="." instance=ExtResource( 5 )]
+margin_top = -2.99664
+margin_bottom = -2.99658
+
+[node name="DropArea" parent="." instance=ExtResource( 7 )]
+margin_left = 725.965
+margin_top = 460.663
+margin_right = 725.965
+margin_bottom = 460.663
+mouse_filter = 2

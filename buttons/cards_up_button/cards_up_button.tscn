@@ -1,0 +1,162 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://masks/solid.png" type="Texture" id=1]
+[ext_resource path="res://textures.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+var toggled = false
+
+
+func _ready():
+	get_tree().root.connect(\"size_changed\", self, \"_on_size_change\")
+	yield(get_tree().create_timer(.5), \"timeout\")
+	initialResize()
+
+
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	if Input.is_action_just_pressed(\"click\"):
+			if !get_parent().get_node(\"holderPos/Tween\").is_active():
+				if toggled:
+					toggled = false
+					get_parent().cowering = false
+					$AnimationPlayer.play(\"click\")
+				else:
+					toggled = true
+					get_parent().cowering = true
+					$AnimationPlayer.play_backwards(\"click\")
+
+func _on_size_change():
+	if get_parent().cardSelected:
+		if get_parent().selectedCard.zoomed:
+			get_parent().selectedCard.unZoom()
+			get_parent().animPlayer.play_backwards(\"fade\")
+	
+	if !get_parent().get_node(\"holderPos/Tween\").is_active():
+		var ratio = get_viewport_rect().size.y / get_viewport_rect().size.x
+		if ratio < 2.04:		# ~ 6 lines
+			if !toggled:
+				get_parent().cowering = true
+				$AnimationPlayer.play_backwards(\"click\")
+				toggled = true
+		else:
+			if toggled:
+				get_parent().cowering = false
+				$AnimationPlayer.play(\"click\")
+				toggled = false
+
+func initialResize():
+	var ratio = get_viewport_rect().size.y / get_viewport_rect().size.x
+	if ratio < 2.04:		# ~ 6 lines
+		get_parent().cowering = true
+		toggled = true
+	else:
+		get_parent().cowering = false
+		$AnimationPlayer.play(\"click\")
+		toggled = false
+"
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 128.002, 127.984 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "click"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Cards/SpriteMask:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Cards/SpriteMask:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( -6, -6 ),
+"update": 0,
+"values": [ Vector2( 0, 150 ), Vector2( 0, 60 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Cards:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( -6, -6 ),
+"update": 0,
+"values": [ Vector2( 130.073, 126.648 ), Vector2( 130.073, 150 ) ]
+}
+
+[node name="CardsUpButton" type="Control"]
+margin_left = -128.0
+margin_top = -128.0
+margin_right = 128.0
+margin_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 127, 127 )
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnBG" type="Sprite" parent="."]
+position = Vector2( 128.073, 126.648 )
+scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 169, 11, 190, 187 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 128.071, 127.632 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="Cards" type="Sprite" parent="."]
+light_mask = 2049
+position = Vector2( 130.073, 126.648 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 660, 30, 150, 147.859 )
+
+[node name="SpriteMask" type="Light2D" parent="Cards"]
+light_mask = 0
+position = Vector2( 0, 150 )
+scale = Vector2( 160.806, 142.301 )
+texture = ExtResource( 1 )
+mode = 3
+range_item_cull_mask = 2048
+shadow_item_cull_mask = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/click = SubResource( 3 )
+
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]

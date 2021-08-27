@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://textures.png" type="Texture" id=1]
+[ext_resource path="res://fonts/name_bar_label.tres" type="DynamicFont" id=2]
+[ext_resource path="res://text_box/name_bar/name_bar.gd" type="Script" id=3]
+
+[sub_resource type="Theme" id=1]
+
+[node name="NameBar" type="NinePatchRect"]
+anchor_right = 0.228
+anchor_bottom = 0.065
+margin_right = 12.68
+margin_bottom = 0.0799866
+texture = ExtResource( 1 )
+region_rect = Rect2( 3, 4, 154.367, 166 )
+patch_margin_left = 26
+patch_margin_top = 30
+patch_margin_right = 30
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.3516
+margin_top = 42.73
+margin_right = -65.6484
+margin_bottom = -29.27
+theme = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://textures.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+signal pressed
+
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	if Input.is_action_just_pressed(\"click\"):
+		$AnimationPlayer.play(\"clicked\")
+		emit_signal(\"pressed\")
+"
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 128.002, 127.984 )
+
+[sub_resource type="Animation" id=3]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( -2, -2, -2 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.9, 0.9 ), Vector2( 1, 1 ) ]
+}
+
+[node name="MenuButton" type="Control"]
+margin_left = -128.0
+margin_top = -128.0
+margin_right = 128.0
+margin_bottom = 127.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 127.229, 126.594 )
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnBG" type="Sprite" parent="."]
+position = Vector2( 127.443, 126.648 )
+scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 169, 11, 190, 187 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 127.441, 127.632 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="Bar1" type="Sprite" parent="."]
+position = Vector2( 63.443, 63.6478 )
+scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 1 )
+offset = Vector2( 48, 0 )
+region_enabled = true
+region_rect = Rect2( 376, 22, 116, 23 )
+
+[node name="Bar2" type="Sprite" parent="."]
+position = Vector2( 127.443, 127.648 )
+scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 376, 22, 116, 23 )
+
+[node name="Bar3" type="Sprite" parent="."]
+position = Vector2( 191.443, 191.648 )
+scale = Vector2( 1.3, 1.3 )
+texture = ExtResource( 1 )
+offset = Vector2( -48, 0 )
+region_enabled = true
+region_rect = Rect2( 376, 22, 116, 23 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/clicked = SubResource( 3 )
+
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
