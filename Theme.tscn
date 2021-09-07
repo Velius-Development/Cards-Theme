@@ -46,6 +46,7 @@ func _on_new_dialogue(data : Dictionary):
 	else:
 		pass #set_next(current_node.next) wait for input...
 	
+	$CardHolder.reset()
 
 # Godot Engine Events
 
