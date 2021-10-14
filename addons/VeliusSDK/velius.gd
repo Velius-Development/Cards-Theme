@@ -13,9 +13,9 @@ signal new_dialogue(data)
 # VARIABLES:
 
 var json_data = {}
-var current_chapter_id = null
-var current_dialogue_id = null # current dialogue id
-var current_location_id = null # current location id
+var current_chapter_id : int
+var current_dialogue_id : int
+var current_location_id : int
 var current_json_path = ""
 var current_json_location = ""
 

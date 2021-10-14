@@ -238,7 +238,7 @@ func _show():
 	$Tween2.start()
 	#Input.vibrate_handheld(10)
 	
-func setup(_title : String, _text : String, _img : String = "res://images/cards/10.jpg", _choiceID : int = 0):
+func setup(_title : String, _text : String, _img : String, _choiceID : int = 0):
 	title = _title
 	$Title.rect_size.x = title.length() * 30
 	text = _text
@@ -253,29 +253,10 @@ func setup(_title : String, _text : String, _img : String = "res://images/cards/
 	$TouchScroll/Text.bbcode_text = text
 	encryptText()
 	
-#	img = Marshalls.variant_to_base64(load("res://images/cards/"+String(img)+".jpg"), true)
-#	img = Marshalls.base64_to_utf8(img)
-#	print(img)
-#	if typeof(img) != TYPE_INT:
-#		img = Marshalls.utf8_to_base64(img)
-#		if Marshalls.base64_to_variant(img, true) != null:
-#			var i = Marshalls.base64_to_variant(img, true)
-#			$Sprite.texture = i
-#	else:
-#		var i = load("res://images/cards/"+String(img)+".png")
-#		if i:
-#			$Sprite.texture = i
-#		else:
-#			$Sprite.texture = load("res://images/cards/"+String(img)+".jpg")
-#
-#	#
-#	$Sprite.texture = load("res://images/cards/10.jpg")
-#	#
-	
 	if Velius.mystery_resource_exists(_img):
 		$Sprite.texture = Velius.png_to_tex(_img)
-	else:
-		$Sprite.texture = load("res://images/cards/10.jpg")
+	elif _img != "":
+		Velius.log("Texture of choice with ID: " + str(_choiceID) + " not found! Dialogue ID: " + str(Velius.current_dialogue_id))
 	
 	
 	_show()

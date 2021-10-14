@@ -23,6 +23,7 @@ func _on_InputArea_input_event(viewport, event, shape_idx):
 			if dC != null:
 				var id = dC.choiceID
 				Velius.choice_made(id)
+				get_parent().cardHolder.reset()
 				if dC.snapping:
 					dC.snapping = false
 					dC.mayDrag = false
