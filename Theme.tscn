@@ -45,8 +45,6 @@ func _on_new_dialogue(data : Dictionary):
 			cardHolder.newCard(data.choices[choice].title, data.choices[choice].description, data.choices[choice].image, int(choice))
 	else:
 		pass #set_next(current_node.next) wait for input...
-	
-	$CardHolder.reset()
 
 # Godot Engine Events
 
