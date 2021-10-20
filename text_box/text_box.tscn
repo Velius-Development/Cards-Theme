@@ -24,7 +24,7 @@ func setText(_text):
 	animating = true
 
 func _set_text():
-	$MarginContainer/TouchScroll/Text.bbcode_text = \"\\n\" + text + \"\\n\\n\"
+	$MarginContainer/TouchScroll/Text.bbcode_text = text + \"\\n\\n\"
 
 
 func _show_continue():
