@@ -250,13 +250,13 @@ func setup(_title : String, _text : String, _img : String, _choiceID : int = 0):
 	
 	$Title.text = title
 	
-	$TouchScroll/Text.bbcode_text = text
+	$SmoothScroll/Text.bbcode_text = text
 	encryptText()
 	
 	if Velius.mystery_resource_exists(_img):
 		$Sprite.texture = Velius.png_to_tex(_img)
 	elif _img != "":
-		Velius.log("Texture of choice with ID: " + str(_choiceID) + " not found! Dialogue ID: " + str(Velius.current_dialogue_id))
+		print("Texture of choice with ID: " + str(_choiceID) + " not found! Dialogue ID: " + str(Velius.current_dialogue_id))
 	
 	
 	_show()
@@ -299,14 +299,14 @@ const encryptChars = "▞▚▙▟▛▜■"
 func encryptText():
 	pass
 #	if Velius.get_settings().encryptText:
-#		$TouchScroll/Text.get("custom_fonts/normal_font").font_data = load("res://fonts/symbol_letters.otf")
+#		$SmoothScroll/Text.get("custom_fonts/normal_font").font_data = load("res://fonts/symbol_letters.otf")
 #		var result = ""
-#		for cha in $TouchScroll/Text.bbcode_text.length()/5:
+#		for cha in $SmoothScroll/Text.bbcode_text.length()/5:
 #			result += encryptChars[rand_range(0, encryptChars.length() - 1)]
-#		$TouchScroll/Text.bbcode_text = result
+#		$SmoothScroll/Text.bbcode_text = result
 
 func decryptText():
 	pass
 #	if Velius.get_settings().encryptText:
-#		$TouchScroll/Text.get("custom_fonts/normal_font").font_data = load("res://fonts/dimbo_regular.ttf")
-#		$TouchScroll/Text.bbcode_text = text
+#		$SmoothScroll/Text.get("custom_fonts/normal_font").font_data = load("res://fonts/dimbo_regular.ttf")
+#		$SmoothScroll/Text.bbcode_text = text

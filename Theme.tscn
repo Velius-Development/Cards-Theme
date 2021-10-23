@@ -53,6 +53,7 @@ func _on_MenuButton_pressed():
 
 func _on_BackpackButton_pressed():
 	print(\"open backpack\")
+	cardHolder.newCard(\"null\", \"nullnullnullnullnullnullnullnullnullnullnull\", \"null\", 0)
 "
 
 [sub_resource type="GDScript" id=2]

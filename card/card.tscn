@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://fonts/data/dimbo_regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://textures.png" type="Texture" id=2]
+[ext_resource path="res://addons/SmoothScroll/SmoothScroll.tscn" type="PackedScene" id=3]
 [ext_resource path="res://shaders/card_glow_wobble.tres" type="Material" id=4]
 [ext_resource path="res://effects/card_glow.png" type="Texture" id=5]
 [ext_resource path="res://masks/card_image_mask.png" type="Texture" id=6]
@@ -18,66 +19,6 @@ size = 80
 use_filter = true
 extra_spacing_char = 2
 font_data = ExtResource( 1 )
-
-[sub_resource type="StyleBoxLine" id=3]
-
-[sub_resource type="GDScript" id=4]
-script/source = "extends ScrollContainer
-
-
-onready var noSbTheme = load(\"res://themes/no_scroll_bar.theme\")
-onready var normalTheme = load(\"res://themes/main.theme\")
-
-var swiping = false
-var swipe_start
-var swipe_mouse_start
-var swipe_mouse_times = []
-var swipe_mouse_positions = []
-
-func _process(delta):
-	if !get_parent().get_parent().get_parent().cardSelected:
-		scroll_vertical = 0
-		self.theme = noSbTheme
-	else:
-		self.theme = normalTheme
-
-func _input(ev):
-	if ev is InputEventMouseButton:
-		if ev.pressed:
-			swiping = true
-			swipe_start = Vector2(get_h_scroll(), get_v_scroll())
-			swipe_mouse_start = ev.position
-			swipe_mouse_times = [OS.get_ticks_msec()]
-			swipe_mouse_positions = [swipe_mouse_start]
-		else:
-			swipe_mouse_times.append(OS.get_ticks_msec())
-			swipe_mouse_positions.append(ev.position)
-			var source = Vector2(get_h_scroll(), get_v_scroll())
-			var idx = swipe_mouse_times.size() - 1
-			var now = OS.get_ticks_msec()
-			var cutoff = now - 100
-			for i in range(swipe_mouse_times.size() - 1, -1, -1):
-				if swipe_mouse_times[i] >= cutoff: idx = i
-				else: break
-			var flick_start = swipe_mouse_positions[idx]
-			var flick_dur = min(0.3, (ev.position - flick_start).length() / 1000)
-			if flick_dur > 0.0:
-				var tween = Tween.new()
-				add_child(tween)
-				var delta = ev.position - flick_start
-				var target = source - delta * flick_dur * 15.0
-				tween.interpolate_method(self, 'set_h_scroll', source.x, target.x, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-				tween.interpolate_method(self, 'set_v_scroll', source.y, target.y, flick_dur, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-				tween.interpolate_callback(tween, flick_dur, 'queue_free')
-				tween.start()
-			swiping = false
-	elif swiping and ev is InputEventMouseMotion:
-		var delta = ev.position - swipe_mouse_start
-		set_h_scroll(swipe_start.x - delta.x)
-		set_v_scroll(swipe_start.y - delta.y)
-		swipe_mouse_times.append(OS.get_ticks_msec())
-		swipe_mouse_positions.append(ev.position)
-"
 
 [sub_resource type="DynamicFont" id=5]
 size = 60
@@ -149,22 +90,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TouchScroll" type="ScrollContainer" parent="."]
+[node name="SmoothScroll" parent="." instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = -311.0
 margin_top = -410.0
 margin_right = 303.0
 margin_bottom = -20.0
-mouse_filter = 2
 theme = ExtResource( 8 )
-custom_styles/bg = SubResource( 3 )
-script = SubResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Text" type="RichTextLabel" parent="TouchScroll"]
+[node name="Text" type="RichTextLabel" parent="SmoothScroll"]
 light_mask = 1025
-margin_top = 0.5
+margin_top = 0.500031
 margin_right = 614.0
 margin_bottom = 389.5
 mouse_filter = 2

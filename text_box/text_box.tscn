@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://fonts/data/NotoSansMono-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://text_box/name_bar/name_bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://textures.png" type="Texture" id=3]
 [ext_resource path="res://masks/text_mask.png" type="Texture" id=4]
 [ext_resource path="res://masks/textbox_mask.png" type="Texture" id=5]
+[ext_resource path="res://addons/SmoothScroll/SmoothScroll.tscn" type="PackedScene" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends NinePatchRect
 
-onready var textNode = $MarginContainer/TouchScroll/Text
+onready var textNode = $MarginContainer/SmoothScroll/Text
 
 var text
 var animating = false
@@ -24,7 +25,7 @@ func setText(_text):
 	animating = true
 
 func _set_text():
-	$MarginContainer/TouchScroll/Text.bbcode_text = text + \"\\n\\n\"
+	$MarginContainer/SmoothScroll/Text.bbcode_text = text + \"\\n\\n\"
 
 
 func _show_continue():
@@ -40,7 +41,7 @@ func finishAnim():
 
 func _process(delta):
 	$MarginContainer.rect_size.y = get_viewport_rect().size.y - 1800
-	$MarginContainer/TouchScroll/Text/Light2DBottom.position.y = $MarginContainer.rect_size.y
+	$MarginContainer/SmoothScroll/Text/Light2DBottom.position.y = $MarginContainer.rect_size.y
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	animating = false
@@ -54,7 +55,7 @@ font_data = ExtResource( 1 )
 [sub_resource type="Animation" id=3]
 length = 5.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("MarginContainer/TouchScroll/Text/Light2D:position")
+tracks/0/path = NodePath("MarginContainer/SmoothScroll/Text/Light2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -83,7 +84,7 @@ tracks/1/keys = {
 } ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("MarginContainer/TouchScroll/Text:modulate")
+tracks/2/path = NodePath("MarginContainer/SmoothScroll/Text:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -141,28 +142,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TouchScroll" type="ScrollContainer" parent="MarginContainer"]
+[node name="SmoothScroll" parent="MarginContainer" instance=ExtResource( 6 )]
+light_mask = 7169
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 1219.0
 margin_bottom = 1210.0
-mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Text" type="RichTextLabel" parent="MarginContainer/TouchScroll"]
+[node name="Text" type="RichTextLabel" parent="MarginContainer/SmoothScroll"]
 light_mask = 7169
-margin_left = 15.0
-margin_right = 1219.0
-margin_bottom = 1210.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 385.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/normal_font = SubResource( 2 )
 bbcode_enabled = true
+text = "asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdfasd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf asd asd dsd ssa dsa das dsd af gfdsafdf"
+fit_content_height = true
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Light2D" type="Light2D" parent="MarginContainer/TouchScroll/Text"]
+[node name="Light2D" type="Light2D" parent="MarginContainer/SmoothScroll/Text"]
 light_mask = 0
 position = Vector2( 590.016, 2400 )
 rotation = 5.07036e-06
@@ -173,9 +179,9 @@ range_z_min = 0
 range_z_max = 0
 range_item_cull_mask = 1024
 
-[node name="Light2DTop" type="Light2D" parent="MarginContainer/TouchScroll/Text"]
+[node name="Light2DTop" type="Light2D" parent="MarginContainer/SmoothScroll/Text"]
 light_mask = 0
-position = Vector2( 623.251, 70.4644 )
+position = Vector2( 623.251, 63.4644 )
 rotation = 3.14159
 scale = Vector2( 2.201, 1 )
 texture = ExtResource( 5 )
@@ -185,15 +191,13 @@ range_z_min = 0
 range_z_max = 0
 range_item_cull_mask = 2048
 
-[node name="Light2DBottom" type="Light2D" parent="MarginContainer/TouchScroll/Text"]
+[node name="Light2DBottom" type="Light2D" parent="MarginContainer/SmoothScroll/Text"]
 light_mask = 0
-position = Vector2( 632.017, 427.236 )
+position = Vector2( 610.09, 1069.9 )
 scale = Vector2( 2.201, 1 )
 texture = ExtResource( 5 )
 offset = Vector2( -0.591721, 50.3282 )
 mode = 3
-range_z_min = 0
-range_z_max = 0
 range_item_cull_mask = 4096
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

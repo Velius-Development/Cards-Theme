@@ -7,6 +7,7 @@ script/source = "extends Control
 
 onready var animPlayer = $AnimationPlayer
 onready var cardRes = load(\"res://card/card.tscn\")
+onready var tcRes = load(\"res://card_holder/touch_collision/touch_collision.tscn\")
 var cardCount = 0
 var rot = 0
 var posX = 0
@@ -104,7 +105,7 @@ func _input(event):
 		if tc != null:
 			tc.queue_free()
 			tc = null
-		tc = load(\"res://card_holder/touch_collision/touch_collision.tscn\").instance()
+		tc = tcRes.instance()
 		add_child(tc)
 		tc.set_global_position(event.position)
 
@@ -137,6 +138,11 @@ func _on_Tween_tween_all_completed():
 
 func _process(delta):
 	$ColorRectLayer/ColorRect.rect_size = get_viewport_rect().size * 1.1
+
+
+func _on_ColorRect_gui_input(event):
+	if selectedCard:
+		selectedCard.get_node(\"SmoothScroll\")._on_Area2D_input_event(null, event, null)
 "
 
 [sub_resource type="Animation" id=2]
@@ -165,7 +171,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 2, 0, 0 ]
+"values": [ 2, 0, 1 ]
 }
 tracks/2/type = "method"
 tracks/2/path = NodePath("ColorRectLayer/ColorRect")
@@ -226,10 +232,12 @@ margin_left = 6.10352e-05
 margin_top = -268.0
 margin_right = 6.10352e-05
 margin_bottom = -268.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Tween" type="Tween" parent="holderPos"]
 
+[connection signal="gui_input" from="ColorRectLayer/ColorRect" to="." method="_on_ColorRect_gui_input"]
 [connection signal="tween_all_completed" from="holderPos/Tween" to="." method="_on_Tween_tween_all_completed"]
