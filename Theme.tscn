@@ -53,7 +53,7 @@ func _on_MenuButton_pressed():
 
 func _on_BackpackButton_pressed():
 	print(\"open backpack\")
-	cardHolder.newCard(\"null\", \"nullnullnullnullnullnullnullnullnullnullnull\", \"null\", 0)
+	cardHolder.newCard(\"null\", \"Du betrittst den Raum der Verderbnis und hoffst, dass alles gut wird\", \"null\", 0)
 "
 
 [sub_resource type="GDScript" id=2]

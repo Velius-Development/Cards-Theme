@@ -6,7 +6,7 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
-extents = Vector2( 709.129, 64.3455 )
+extents = Vector2( 13.0878, 1.62622 )
 
 [node name="SmoothScroll" type="Control"]
 anchor_right = 1.0

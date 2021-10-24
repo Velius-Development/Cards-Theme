@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://fonts/data/dimbo_regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://textures.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://masks/card_image_mask.png" type="Texture" id=6]
 [ext_resource path="res://card/card.gd" type="Script" id=7]
 [ext_resource path="res://themes/no_scroll_bar.theme" type="Theme" id=8]
+[ext_resource path="res://fonts/data/NotoSansMono-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=9]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.101961, 0.180392, 1 )
@@ -20,12 +21,12 @@ use_filter = true
 extra_spacing_char = 2
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 60
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 9 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 416.627, 614.707 )
 
 [node name="Card" type="KinematicBody2D" groups=[
@@ -101,13 +102,14 @@ theme = ExtResource( 8 )
 
 [node name="Text" type="RichTextLabel" parent="SmoothScroll"]
 light_mask = 1025
-margin_top = 0.500031
-margin_right = 614.0
-margin_bottom = 389.5
+margin_top = 1.0
+margin_right = 776.0
+margin_bottom = 491.0
+rect_scale = Vector2( 0.8, 0.8 )
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/normal_font = SubResource( 5 )
+custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 fit_content_height = true
 __meta__ = {
@@ -117,7 +119,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( -3.33331, -525 )
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 one_way_collision = true
 
 [node name="Tween" type="Tween" parent="."]
