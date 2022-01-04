@@ -36,7 +36,7 @@ func _on_new_dialogue(data : Dictionary):
 	textBox.setText(data.text)
 	nameBar.updateName(data.tellerName)
 	imageFrame.setTex(data.image)
-
+	
 	# If there are any choices, show them
 	if data.has(\"choices\"):
 		# Short delay as an effect

@@ -261,7 +261,7 @@ func setup(_title : String, _text : String, _img : String, _choiceID : int = 0):
 	
 	_show()
 
-func _process(delta):
+func _physics_process(delta):
 	$Sprite/Light2D.range_z_min = self.z_index	#Set mask only effecting own image
 	$Sprite/Light2D.range_z_max = self.z_index
 	
@@ -279,7 +279,7 @@ func _process(delta):
 	if dragging:
 		if lastX != null && wiggleWait <= 0:
 			lastDif = lastX-global_position.x
-			self.rotation = lerp(lerp(0, self.rotation, 0.5), (lastX-global_position.x)/360, 0.8)
+			self.rotation = lerp(lerp(0, self.rotation, 0.5), (lastX-global_position.x)/360, 0.9)
 		else:
 			wiggleWait -= 1
 		lastX = global_position.x

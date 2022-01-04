@@ -10,16 +10,16 @@
 [ext_resource path="res://themes/no_scroll_bar.theme" type="Theme" id=8]
 [ext_resource path="res://fonts/data/NotoSansMono-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=9]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.12549, 0.101961, 0.180392, 1 )
-expand_margin_left = 10.0
-expand_margin_right = 10.0
-
 [sub_resource type="DynamicFont" id=2]
 size = 80
 use_filter = true
 extra_spacing_char = 2
 font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.12549, 0.101961, 0.180392, 1 )
+expand_margin_left = 10.0
+expand_margin_right = 10.0
 
 [sub_resource type="DynamicFont" id=3]
 size = 60
@@ -29,9 +29,7 @@ font_data = ExtResource( 9 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 416.627, 614.707 )
 
-[node name="Card" type="KinematicBody2D" groups=[
-"card",
-]]
+[node name="Card" type="KinematicBody2D" groups=["card"]]
 position = Vector2( 0, -1 )
 scale = Vector2( 0.7, 0.7 )
 input_pickable = true
@@ -85,8 +83,8 @@ margin_right = -302.0
 margin_bottom = -986.0
 size_flags_horizontal = 15
 size_flags_vertical = 15
-custom_styles/normal = SubResource( 1 )
 custom_fonts/font = SubResource( 2 )
+custom_styles/normal = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -3,6 +3,7 @@ extends Control
 export(float, 10, 1) var multi = 8	# drag speed of one input
 export var damping = 0.1
 export var scrollbar_damping = 1.0
+export var touch_support = false
 
 var v = Vector2(0,0) 				# current velocity
 var just_stop_under = 0.01
@@ -131,7 +132,9 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			BUTTON_WHEEL_UP:    v.y += multi
 			BUTTON_WHEEL_RIGHT: v.x -= multi
 			BUTTON_WHEEL_LEFT:  v.x += multi
-
+	
+	if !touch_support:
+		return
 	if event is InputEventScreenDrag && is_grabbed:
 		v.y = (last_mouse_pos.direction_to(mouse_pos)).y * multi
 	last_mouse_pos = mouse_pos
